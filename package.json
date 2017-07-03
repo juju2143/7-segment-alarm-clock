@@ -1,0 +1,23 @@
+{
+  "name": "7-segment-alarm-clock",
+  "version": "0.0.1",
+  "description": "Cool customizable 7-segment alarm clock widget for your desktop.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juju2143/7-segment-alarm-clock.git"
+  },
+  "author": "juju2143 <juju@juju2143.ca>",
+  "license": "LiLiQ-R",
+  "bugs": {
+    "url": "https://github.com/juju2143/7-segment-alarm-clock/issues"
+  },
+  "homepage": "https://github.com/juju2143/7-segment-alarm-clock#readme",
+  "devDependencies": {
+    "electron": "~1.7.4"
+  }
+}

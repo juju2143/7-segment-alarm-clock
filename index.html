@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="js/excanvas.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="js/segment-display.js"></script>
+<script type="text/javascript">
+var display = new SegmentDisplay("display");
+display.pattern         = "##:##:##";
+display.displayAngle    = 6;
+display.digitHeight     = 20;
+display.digitWidth      = 12;
+display.digitDistance   = 4;
+display.segmentWidth    = 2.5;
+display.segmentDistance = 0.5;
+display.segmentCount    = 7;
+display.cornerType      = 3;
+display.colorOn         = "#ff2c0f";
+display.colorOff        = "#631605";
+display.draw();
+
+window.setInterval('animate()', 100);
+
+function animate() {
+  var time    = new Date();
+  var hours   = time.getHours();
+  var minutes = time.getMinutes();
+  var seconds = time.getSeconds();
+  var value   = ((hours < 10) ? ' ' : '') + hours
+              + ':' + ((minutes < 10) ? '0' : '') + minutes
+              + ':' + ((seconds < 10) ? '0' : '') + seconds;
+  display.setValue(value);
+}
+
+window.onload=function()
+{
+  document.body.style.backgroundColor = "#1e1e24";
+  document.body.style.margin = "8px";
+  window.onresize();
+}
+
+window.onresize=function()
+{
+  var disp = document.getElementById("display");
+  var margin = parseFloat(getComputedStyle(document.body).getPropertyValue("margin"))*2;
+  disp.width = window.innerWidth-margin;
+  disp.height = window.innerHeight-margin;
+}
+</script>
+<style>
+body
+{
+  padding: 0;
+  -webkit-app-region: drag;
+}
+html, body
+{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+<canvas id="display">
+  Your browser is unfortunately not supported.
+</canvas>
+</body>
+</html>
