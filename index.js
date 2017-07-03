@@ -5,7 +5,7 @@ app.on('ready', () => {
     width: 536,
     height: 116,
     title: "7 Segment Alarm Clock",
-    icon: "img/icon.png",
+    icon: `${__dirname}/img/icon.png`,
     frame: false,
     transparent: true,
     backgroundColor: "#1e1e24",
@@ -18,13 +18,9 @@ app.on('ready', () => {
   const contextMenu = Menu.buildFromTemplate([
     {label: 'Hide', type: 'checkbox', click: (item) => {
       if(win.isVisible())
-      {
         win.hide();
-      }
       else
-      {
         win.show();
-      }
     }},
     {label: 'Options', click: () => {
       if(optwin === null || optwin.isDestroyed())
@@ -33,7 +29,7 @@ app.on('ready', () => {
           width: 800,
           height: 600,
           title: "Options",
-          icon: "img/icon.png",
+          icon: `${__dirname}/img/icon.png`,
           backgroundColor: "#1e1e24"
         });
         optwin.loadURL(`file://${__dirname}/options.html`);
@@ -47,7 +43,9 @@ app.on('ready', () => {
     {label: 'Quit', role: 'quit'}
   ]);
 
-  tray = new Tray('img/icon16.png');
+  Menu.setApplicationMenu(process.platform=='darwin'?contextMenu:null);
+
+  tray = new Tray(`${__dirname}/img/icon16.png`);
   tray.setToolTip('7 Segment Alarm Clock');
   tray.setContextMenu(contextMenu);
 });

@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,10 @@
   },
   "homepage": "https://github.com/juju2143/7-segment-alarm-clock#readme",
   "devDependencies": {
-    "electron": "~1.7.4"
+    "electron": "~1.7.4",
+    "electron-builder": "^19.12.0"
+  },
+  "build": {
+    "appId": "ca.juju2143.7segmentalarmclock"
   }
 }
