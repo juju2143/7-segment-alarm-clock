@@ -25,5 +25,8 @@
   },
   "build": {
     "appId": "ca.juju2143.7segmentalarmclock"
+  },
+  "dependencies": {
+    "metar": "^1.0.0"
   }
 }

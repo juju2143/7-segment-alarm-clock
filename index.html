@@ -7,6 +7,9 @@
 
 <script type="text/javascript" src="js/segment-display.js"></script>
 <script type="text/javascript">
+var http = require("http");
+var parseMETAR = require("metar");
+
 var display = new SegmentDisplay("display");
 display.pattern         = "##:##:##";
 display.displayAngle    = 6;
@@ -21,7 +24,49 @@ display.colorOn         = "#ff2c0f";
 display.colorOff        = "#631605";
 display.draw();
 
+var display2 = new SegmentDisplay("display2");
+display2.pattern         = "####";
+display2.displayAngle    = 6;
+display2.digitHeight     = 20;
+display2.digitWidth      = 12;
+display2.digitDistance   = 4;
+display2.segmentWidth    = 2.5;
+display2.segmentDistance = 0.5;
+display2.segmentCount    = 7;
+display2.cornerType      = 3;
+display2.colorOn         = "#ff2c0f";
+display2.colorOff        = "#631605";
+display2.draw();
+
 window.setInterval('animate()', 100);
+
+var temp = "N/A°C";
+var wint;
+
+(function fetchWeather(){
+  //console.log("Fetching weather...");
+  http.get('http://tgftp.nws.noaa.gov/data/observations/metar/stations/CYQB.TXT', (res) => {
+    const { statusCode } = res;
+    if(statusCode === 200)
+    {
+      res.setEncoding('utf8');
+      let rawData = '';
+      res.on('data', (chunk) => { rawData += chunk; });
+      res.on('end', () => {
+        //console.log(rawData);
+        let w = rawData.split("\n")[1];
+        var weather = parseMETAR(w);
+        //console.log(weather);
+        temp = (weather["temperature"]?weather["temperature"]:"N A")+"C";
+        while(temp.length < 4) temp = " "+temp;
+      });
+    }
+  }).on('error', ()=>{
+    temp = "N AC";
+    console.log("weather: things happened.");
+  });
+  wint = setTimeout(fetchWeather,900000);
+})();
 
 function animate() {
   var time    = new Date();
@@ -32,6 +77,7 @@ function animate() {
               + ':' + ((minutes < 10) ? '0' : '') + minutes
               + ':' + ((seconds < 10) ? '0' : '') + seconds;
   display.setValue(value);
+  display2.setValue(temp);
 }
 
 window.onload=function()
@@ -44,9 +90,12 @@ window.onload=function()
 window.onresize=function()
 {
   var disp = document.getElementById("display");
+  var disp2 = document.getElementById("display2");
   var margin = parseFloat(getComputedStyle(document.body).getPropertyValue("margin"))*2;
   disp.width = window.innerWidth-margin;
-  disp.height = window.innerHeight-margin;
+  disp.height = window.innerHeight/2-margin;
+  disp2.width = window.innerWidth-margin;
+  disp2.height = window.innerHeight/2-margin;
 }
 </script>
 <style>
@@ -65,6 +114,9 @@ html, body
 </head>
 <body>
 <canvas id="display">
+  Your browser is unfortunately not supported.
+</canvas>
+<br/><canvas id="display2">
   Your browser is unfortunately not supported.
 </canvas>
 </body>

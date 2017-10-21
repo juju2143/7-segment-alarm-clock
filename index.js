@@ -3,7 +3,7 @@ const {app, BrowserWindow, Menu, Tray} = require('electron');
 app.on('ready', () => {
   let win = new BrowserWindow({
     width: 536,
-    height: 116,
+    height: 232,
     title: "7 Segment Alarm Clock",
     icon: `${__dirname}/img/icon.png`,
     frame: false,
